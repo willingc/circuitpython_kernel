@@ -8,11 +8,11 @@ import time
 from ipykernel.kernelbase import Kernel
 from .board import connect
 
-__version__ = '0.1.0'
+__version__ = '0.2.0'
 
 class CircuitPyKernel(Kernel):
     implementation = 'circuitpython_kernel'
-    implementation_version = '0.1.0'
+    implementation_version = '0.2.0'
 
     language_info = {'name': 'python',
                      'version': '3',
