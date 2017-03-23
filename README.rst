@@ -18,7 +18,7 @@ CircuitPython Kernel
      :alt: Updates
 
 
-CircuitPython Kernel enables CircuitPython to be used in Jupyterr Notebooks.
+CircuitPython Kernel enables CircuitPython to be used in Jupyter Notebooks.
 
 
 * Free software: BSD license
@@ -37,4 +37,3 @@ This package was created with Cookiecutter_ and the `audreyr/cookiecutter-pypack
 
 .. _Cookiecutter: https://github.com/audreyr/cookiecutter
 .. _`audreyr/cookiecutter-pypackage`: https://github.com/audreyr/cookiecutter-pypackage
-
