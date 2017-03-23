@@ -10,7 +10,6 @@ with open('HISTORY.rst') as history_file:
     history = history_file.read()
 
 requirements = [
-    # 'Click>=6.0',
     'pyserial',
     'ipykernel',
 ]
@@ -22,7 +21,7 @@ test_requirements = [
 setup(
     name='circuitpython_kernel',
     version='0.1.0',
-    description="CircuitPython Kernel enables CircuitPython to be used in Jupyter Notebooks.",
+    description="CircuitPython Kernel enables CircuitPython to be used in Jupyter Notebooks for learning Python coding with microcontrollers.",
     long_description=readme + '\n\n' + history,
     author="Carol Willing",
     author_email='carolcode@willingconsulting.com',
@@ -32,16 +31,12 @@ setup(
     ],
     package_dir={'circuitpython_kernel':
                  'circuitpython_kernel'},
-    entry_points={
-        'console_scripts': [
-            'circuitpython_kernel=circuitpython_kernel.cli:main'
-        ]
-    },
+    entry_points={},
     include_package_data=True,
     install_requires=requirements,
     license="BSD license",
     zip_safe=False,
-    keywords='circuitpython_kernel',
+    keywords='circuitpython_kernel jupyter notebook',
     classifiers=[
         'Development Status :: 2 - Pre-Alpha',
         'Intended Audience :: Developers',
