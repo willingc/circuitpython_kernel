@@ -1,5 +1,5 @@
-Welcome to CircuitPython Kernel's documentation!
-======================================
+CircuitPython Kernel
+====================
 
 Contents:
 
@@ -9,8 +9,10 @@ Contents:
    readme
    installation
    usage
+   modules
    contributing
-   authorshistory
+   authors
+   history
 
 Indices and tables
 ==================

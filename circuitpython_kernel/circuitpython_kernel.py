@@ -6,7 +6,7 @@ import sys
 import time
 
 from ipykernel.kernelbase import Kernel
-from .circuitpython_board import connect
+from .board import connect
 
 __version__ = '0.1.0'
 
