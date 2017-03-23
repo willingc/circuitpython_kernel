@@ -26,6 +26,10 @@ Notebooks to teach Python_ coding with microcontrollers.
 * Documentation: https://circuitpython-kernel.readthedocs.io.
 
 
+.. warning:: This package is a pre-alpha version. Use at your own peril.
+             It is missing functionality, has hard coding of variables,
+             and has only been used with MacOS 10.12 and Atmel SAMD.
+
 Features
 --------
 
