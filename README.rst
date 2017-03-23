@@ -1,6 +1,6 @@
-===============================
+====================
 CircuitPython Kernel
-===============================
+====================
 
 
 .. image:: https://img.shields.io/pypi/v/circuitpython_kernel.svg
@@ -18,7 +18,8 @@ CircuitPython Kernel
      :alt: Updates
 
 
-CircuitPython Kernel enables CircuitPython to be used in Jupyter Notebooks.
+CircuitPython Kernel enables CircuitPython_ to be used in Jupyter_
+Notebooks to teach Python_ coding with microcontrollers.
 
 
 * Free software: BSD license
@@ -31,12 +32,16 @@ Features
 * TODO
 
 Credits
----------
+-------
 
 This package was created with Cookiecutter_ and the `audreyr/cookiecutter-pypackage`_ project template.
 
-This package is inspired by Thomas Kluyver's ubit_kernel for the BBC Micro:bit
+This package is inspired by Thomas Kluyver's ubit_kernel_ for the BBC Micro:bit
 and Project Jupyter's wrapper kernel.
 
+.. _CircuitPython: https://github.com/adafruit/circuitpython
+.. _Jupyter: https://jupyter.org
+.. _Python: https://python.org
 .. _Cookiecutter: https://github.com/audreyr/cookiecutter
 .. _`audreyr/cookiecutter-pypackage`: https://github.com/audreyr/cookiecutter-pypackage
+.. _ubit_kernel: https://github.com/takluyver/ubit_kernel

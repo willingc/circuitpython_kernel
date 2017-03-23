@@ -14,7 +14,8 @@ To install CircuitPython Kernel, run this command in your terminal:
 
     $ pip install circuitpython_kernel
 
-This is the preferred method to install CircuitPython Kernel, as it will always install the most recent stable release. 
+This is the preferred method to install CircuitPython Kernel, as it will
+always install the most recent stable release.
 
 If you don't have `pip`_ installed, this `Python installation guide`_ can guide
 you through the process.
@@ -26,7 +27,7 @@ you through the process.
 From sources
 ------------
 
-The sources for CircuitPython Kernel can be downloaded from the `Github repo`_.
+The sources for CircuitPython Kernel can be downloaded from the `GitHub repo`_.
 
 You can either clone the public repository:
 
@@ -47,5 +48,5 @@ Once you have a copy of the source, you can install it with:
     $ python setup.py install
 
 
-.. _Github repo: https://github.com/willingc/circuitpython_kernel
+.. _GitHub repo: https://github.com/willingc/circuitpython_kernel
 .. _tarball: https://github.com/willingc/circuitpython_kernel/tarball/master
