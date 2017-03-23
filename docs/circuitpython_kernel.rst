@@ -12,14 +12,6 @@ circuitpython_kernel.board module
     :undoc-members:
     :show-inheritance:
 
-circuitpython_kernel.circuitpython_board module
------------------------------------------------
-
-.. automodule:: circuitpython_kernel.circuitpython_board
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
 circuitpython_kernel.circuitpython_kernel module
 ------------------------------------------------
 
