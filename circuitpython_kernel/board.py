@@ -11,14 +11,14 @@ PARITY = 'N'
 
 
 def find_board():
-    """Find the port for the first board found connected to the kernel."""
+    """Find port where first board is connected."""
     for port in comports():
         if port.vid == CPSAMD_VID and port.pid == CPSAMD_PID:
             return port.device
 
 
 def connect():
-    """Connect using a pySerial Serial object to talk to the boards"""
+    """Connect to a pySerial Serial object."""
     #s = Serial(find_circuitpython_board(), BAUDRATE, parity=PARITY)
     # Hardcoded current device
     s = Serial('/dev/tty.usbmodem1421', BAUDRATE, parity=PARITY)

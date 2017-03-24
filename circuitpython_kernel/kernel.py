@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-
+"""Basic functionality of CircuitPython kernel."""
 import ast
 import re
 import sys
@@ -11,6 +11,7 @@ from .board import connect
 __version__ = '0.2.0'
 
 class CircuitPyKernel(Kernel):
+    """CircuitPython kernel implementation."""
     implementation = 'circuitpython_kernel'
     implementation_version = '0.2.0'
 
@@ -18,8 +19,7 @@ class CircuitPyKernel(Kernel):
                      'version': '3',
                      'mimetype': 'text/x-python',
                      'file_extension': '.py',
-                     'codemirror_mode': {'name': 'python',
-                                         'version': 3},
+                     'codemirror_mode': {'name': 'python', 'version': 3},
                      'pygments_lexer': 'python3',
                     }
 
@@ -31,13 +31,29 @@ class CircuitPyKernel(Kernel):
 
     banner = "Jupyter and CircuitPython create fablab-ulous things."
 
+
     def __init__(self, **kwargs):
         """Set up connection to board"""
         super().__init__(**kwargs)
         self.serial = connect()
 
+
     def run_code(self, code):
-        """Run a string of code, return strings for stdout and stderr"""
+        """Run a code snippet.
+
+        Parameters
+        ----------
+        code : str
+            Code to be executed.
+
+        Returns
+        -------
+        out
+            Decoded result from code run.
+        err
+            Decoded error from code run.
+
+        """
         self.serial.write(code.encode('utf-8') + b'\x04')
         result = bytearray()
         while not result.endswith(b'\x04>'):
@@ -48,9 +64,32 @@ class CircuitPyKernel(Kernel):
         out, err = result[2:-2].split(b'\x04', 1)
         return out.decode('utf-8', 'replace'), err.decode('utf-8', 'replace')
 
-    def do_execute(self, code, silent, store_history=True,
+
+    def do_execute(self, code, silent=False, store_history=True,
                    user_expressions=None, allow_stdin=False):
-        """Execute a user's code cell"""
+        """Execute a user's code cell.
+
+        Parameters
+        ----------
+        code : str
+            Code to be executed.
+        silent : bool
+            True, output is not displayed.
+        store_history : bool
+            Whether to record code in history and increase execution count. If
+            silent is True, this is implicitly false.
+        user_expressions : dict, optional
+            Mapping of names to expressions to evaluate after code is run.
+        allow_stdin : bool
+            Whether the frontend can provide input on request (e.g. for
+            Python’s raw_input()).
+
+        Returns
+        -------
+        dict
+            Execution results.
+
+        """
         out, err = self.run_code(code)
         if out:
             self.send_response(self.iopub_socket, 'stream', {
@@ -66,13 +105,15 @@ class CircuitPyKernel(Kernel):
         return {'status': 'ok', 'execution_count': self.execution_count,
                 'payload': [], 'user_expressions': {}}
 
+
     def _eval(self, expr):
         """Evaluate the expression"""
         out, err = self.run_code('print({})'.format(expr))
         return ast.literal_eval(out)
 
+
     def do_complete(self, code, cursor_pos):
-        """Support code completion"""
+        """Support code completion."""
         code = code[:cursor_pos]
         m = re.search(r'(\w+\.)*(\w+)?$', code)
         if m:
