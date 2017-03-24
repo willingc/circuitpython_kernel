@@ -51,16 +51,13 @@ lint: ## check style with flake8
 	flake8 circuitpython_kernel tests
 
 test: ## run tests quickly with the default Python
-	
+
 		python setup.py test
 
-test-all: ## run tests on every Python version with tox
-	tox
-
 coverage: ## check code coverage quickly with the default Python
-	
+
 		coverage run --source circuitpython_kernel setup.py test
-	
+
 		coverage report -m
 		coverage html
 		$(BROWSER) htmlcov/index.html
