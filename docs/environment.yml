@@ -7,3 +7,4 @@ dependencies:
 - sphinx>=1.3.6
 - pip:
     - circuitpython_kernel==0.1.0
+    - Flask-Sphinx-Themes
