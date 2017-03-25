@@ -5,8 +5,8 @@ from serial import Serial
 from serial.tools.list_ports import comports
 
 # Boards USB
-FEATHER_MO_BASIC_VID = '239A'
-FEATHER_MO_BASIC_PID = '8015'
+FEATHER_MO_BASIC_VID = 0x239A
+FEATHER_MO_BASIC_PID = 0x8015
 
 BAUDRATE = 115200
 PARITY = 'N'
@@ -45,12 +45,10 @@ def connect():
     Note that ctrl-A and ctrl-D do not work with WebREPL.
 
     """
-    port_device = find_board()
-    s = Serial(port_device, BAUDRATE, parity=PARITY)
+    s = Serial(find_board())
     if not s.is_open:
         s.open()
-    s.write(b'a')
-    #s.write(b'\x03\x01')  # Ctrl-C: interrupt, Ctrl-A: switch to raw REPL
-    #s.read_until(b'raw REPL')
-    #s.read_until(b'\r\n>')  # Wait for prompt
+    s.write(b'\x03\x01')  # Ctrl-C: interrupt, Ctrl-A: switch to raw REPL
+    s.read_until(b'raw REPL')
+    s.read_until(b'\r\n>')  # Wait for prompt
     return s
