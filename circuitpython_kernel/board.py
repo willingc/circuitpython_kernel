@@ -4,8 +4,10 @@
 from serial import Serial
 from serial.tools.list_ports import comports
 
-CPSAMD_PID = 516
-CPSAMD_VID = 3368
+# Boards USB
+FEATHER_MO_BASIC_VID = '239A'
+FEATHER_MO_BASIC_PID = '8015'
+
 BAUDRATE = 115200
 PARITY = 'N'
 
@@ -13,7 +15,7 @@ PARITY = 'N'
 def find_board():
     """Find port where first board is connected."""
     for port in comports():
-        if port.vid == CPSAMD_VID and port.pid == CPSAMD_PID:
+        if port.vid == FEATHER_MO_BASIC_VID and port.pid == FEATHER_MO_BASIC_PID:
             return port.device
 
 
