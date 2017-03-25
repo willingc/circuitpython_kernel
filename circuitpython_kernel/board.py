@@ -25,9 +25,11 @@ def connect():
     If you do not see the REPL hit `enter` a few times. Control-A or Home
     sends you to beginning of line. Control-E or End to the end of the line.
 
-    ESP8266 REPL prompt is `>>>`
-
     SAMD21 REPL prompt is `>>>`
+       - Press any key will enter REPL
+       - Ctrl-D does a soft reset.
+
+    ESP8266 REPL prompt is `>>>`
 
     There are four other control commands:
 
@@ -43,10 +45,12 @@ def connect():
     Note that ctrl-A and ctrl-D do not work with WebREPL.
 
     """
-    s = Serial(find_board(), BAUDRATE, parity=PARITY)
+    port_device = find_board()
+    s = Serial(port_device, BAUDRATE, parity=PARITY)
     if not s.is_open:
         s.open()
-    s.write(b'\x03\x01')  # Ctrl-C: interrupt, Ctrl-A: switch to raw REPL
-    s.read_until(b'raw REPL')
-    s.read_until(b'\r\n>')  # Wait for prompt
+    s.write(b'a')
+    #s.write(b'\x03\x01')  # Ctrl-C: interrupt, Ctrl-A: switch to raw REPL
+    #s.read_until(b'raw REPL')
+    #s.read_until(b'\r\n>')  # Wait for prompt
     return s
