@@ -12,24 +12,22 @@ __version__ = '0.2.0'
 
 class CircuitPyKernel(Kernel):
     """CircuitPython kernel implementation."""
+    protocol_version = '5.0.0'
     implementation = 'circuitpython_kernel'
     implementation_version = '0.2.0'
-
     language_info = {'name': 'python',
                      'version': '3',
                      'mimetype': 'text/x-python',
                      'file_extension': '.py',
-                     'codemirror_mode': {'name': 'python', 'version': 3},
                      'pygments_lexer': 'python3',
+                     'codemirror_mode': {'name': 'python', 'version': 3},
                     }
-
+    banner = "Jupyter and CircuitPython create fablab-ulous things."
     help_links = [
         {'text': 'CircuitPython kernel',
-         'url': 'http://github.com/willingc/circuitpython_kernel.git'
+         'url': 'https://circuitpython_kernel.readthedocs.io'
         },
     ]
-
-    banner = "Jupyter and CircuitPython create fablab-ulous things."
 
 
     def __init__(self, **kwargs):
@@ -55,6 +53,7 @@ class CircuitPyKernel(Kernel):
 
         """
         self.serial.write(code.encode('utf-8') + b'\x04')
+
         result = bytearray()
         while not result.endswith(b'\x04>'):
             time.sleep(0.1)
@@ -62,6 +61,7 @@ class CircuitPyKernel(Kernel):
 
         assert result.startswith(b'OK')
         out, err = result[2:-2].split(b'\x04', 1)
+
         return out.decode('utf-8', 'replace'), err.decode('utf-8', 'replace')
 
 
@@ -72,9 +72,10 @@ class CircuitPyKernel(Kernel):
         Parameters
         ----------
         code : str
-            Code to be executed.
+            Code, one or more lines, to be executed.
         silent : bool
-            True, output is not displayed.
+            True, signals kernel to execute code quietly, and output is not
+            displayed. The default is False.
         store_history : bool
             Whether to record code in history and increase execution count. If
             silent is True, this is implicitly false.
@@ -91,19 +92,20 @@ class CircuitPyKernel(Kernel):
 
         """
         out, err = self.run_code(code)
-        if out:
-            self.send_response(self.iopub_socket, 'stream', {
-                'name': 'stdout',
-                'text': out
-            })
-        if err:
-            self.send_response(self.iopub_socket, 'stream', {
-                'name': 'stderr',
-                'text': err
-            })
 
-        return {'status': 'ok', 'execution_count': self.execution_count,
-                'payload': [], 'user_expressions': {}}
+        if not silent:
+            if out:
+                stream_content = {'name': 'stdout', 'text': out}
+                self.send_response(self.iopub_socket, 'stream',stream_content)
+            if err:
+                stream_content = {'name': 'stdout', 'text': err}
+                self.send_response(self.iopub_socket, 'stream', stream_content)
+
+        return {'status': 'ok',
+                'execution_count': self.execution_count,
+                'payload': [],
+                'user_expressions': {},
+                }
 
 
     def _eval(self, expr):

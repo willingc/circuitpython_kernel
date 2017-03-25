@@ -13,6 +13,7 @@ To install CircuitPython Kernel, run this command in your terminal:
 .. code-block:: console
 
     $ pip install circuitpython_kernel
+    $ python -m circuitpython_kernel.install
 
 This is the preferred method to install CircuitPython Kernel, as it will
 always install the most recent stable release.
