@@ -28,6 +28,7 @@ def install_my_kernel_spec(user=True, prefix=None):
         with open(os.path.join(td, 'kernel.json'), 'w') as f:
             json.dump(kernel_json, f, sort_keys=True)
         kernel_name = kernel_json['name']
+        print('Installing CircuitPython kernelspec')
         try:
             install_kernel_spec(td, kernel_name, user=user, replace=True,
                 prefix=prefix)

@@ -44,6 +44,8 @@ def connect():
 
     """
     s = Serial(find_board(), BAUDRATE, parity=PARITY)
+    if not s.is_open:
+        s.open()
     s.write(b'\x03\x01')  # Ctrl-C: interrupt, Ctrl-A: switch to raw REPL
     s.read_until(b'raw REPL')
     s.read_until(b'\r\n>')  # Wait for prompt

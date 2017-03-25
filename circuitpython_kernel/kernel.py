@@ -7,7 +7,7 @@ import time
 
 from ipykernel.kernelbase import Kernel
 from .board import connect
-from .version import  __version__
+from .version import __version__
 
 
 class CircuitPyKernel(Kernel):
@@ -25,7 +25,7 @@ class CircuitPyKernel(Kernel):
     banner = "Jupyter and CircuitPython create fablab-ulous things."
     help_links = [
         {'text': 'CircuitPython kernel',
-         'url': 'https://circuitpython_kernel.readthedocs.io'
+         'url': 'https://circuitpython_kernel.readthedocs.io',
         },
     ]
 
