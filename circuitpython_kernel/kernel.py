@@ -7,14 +7,14 @@ import time
 
 from ipykernel.kernelbase import Kernel
 from .board import connect
+from .version import  __version__
 
-__version__ = '0.2.0'
 
 class CircuitPyKernel(Kernel):
     """CircuitPython kernel implementation."""
     protocol_version = '5.0.0'
     implementation = 'circuitpython_kernel'
-    implementation_version = '0.2.0'
+    implementation_version = __version__
     language_info = {'name': 'python',
                      'version': '3',
                      'mimetype': 'text/x-python',

@@ -43,9 +43,7 @@ def connect():
     Note that ctrl-A and ctrl-D do not work with WebREPL.
 
     """
-    #s = Serial(find_circuitpython_board(), BAUDRATE, parity=PARITY)
-    # Hardcoded current device
-    s = Serial('/dev/tty.usbmodem1421', BAUDRATE, parity=PARITY)
+    s = Serial(find_board(), BAUDRATE, parity=PARITY)
     s.write(b'\x03\x01')  # Ctrl-C: interrupt, Ctrl-A: switch to raw REPL
     s.read_until(b'raw REPL')
     s.read_until(b'\r\n>')  # Wait for prompt
