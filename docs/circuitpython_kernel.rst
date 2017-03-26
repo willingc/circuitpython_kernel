@@ -28,6 +28,14 @@ circuitpython_kernel.kernel module
     :undoc-members:
     :show-inheritance:
 
+circuitpython_kernel.version module
+-----------------------------------
+
+.. automodule:: circuitpython_kernel.version
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 
 Module contents
 ---------------
