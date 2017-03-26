@@ -7,7 +7,6 @@ from serial.tools.list_ports import comports
 # Atmel SAMD Boards USB
 FEATHER_MO_BASIC = {'VID': 0x239A, 'PID': 0x8015}
 
-
 BAUDRATE = 115200
 PARITY = 'N'
 
@@ -15,8 +14,7 @@ PARITY = 'N'
 def find_board():
     """Find port where first board is connected."""
     for port in comports():
-        if '/dev/cu' in port.device:
-#        if port.vid == FEATHER_MO_BASIC['VID'] and port.pid == FEATHER_MO_BASIC_PID:
+        if port.vid == FEATHER_MO_BASIC['VID'] and port.pid == FEATHER_MO_BASIC_PID:
             return port.device
 
 def connect():
@@ -50,7 +48,7 @@ def connect():
         Serial object connected to the microcontroller board
 
     """
-    s = Serial(find_board(), 115200, parity=PARITY)
+    s = Serial(find_board())
     if not s.is_open:
         s.open()
     s.write(b'\x03\x01')  # Ctrl-C: interrupt, Ctrl-A: switch to raw REPL
