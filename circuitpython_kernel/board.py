@@ -48,7 +48,7 @@ def connect():
         Serial object connected to the microcontroller board
 
     """
-    s = Serial(find_board())
+    s = Serial(find_board(), 115200, parity=PARITY)
     if not s.is_open:
         s.open()
     s.write(b'\x03\x01')  # Ctrl-C: interrupt, Ctrl-A: switch to raw REPL
