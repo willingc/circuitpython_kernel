@@ -14,7 +14,7 @@ PARITY = 'N'
 def find_board():
     """Find port where first board is connected."""
     for port in comports():
-        if port.vid == FEATHER_MO_BASIC['VID'] and port.pid == FEATHER_MO_BASIC_PID:
+        if port.vid == FEATHER_MO_BASIC['VID'] and port.pid == FEATHER_MO_BASIC['PID']:
             return port.device
 
 def connect():
