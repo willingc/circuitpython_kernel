@@ -95,16 +95,14 @@ class CircuitPyKernel(Kernel):
 
         if not silent:
             if out:
-                stream_content = {'name': 'stdout', 'text': out}
-                self.send_response(self.iopub_socket, 'stream',stream_content)
+                self.send_response(self.iopub_socket, 'stream', {'name': 'stdout', 'text': out})
             if err:
-                stream_content = {'name': 'stdout', 'text': err}
-                self.send_response(self.iopub_socket, 'stream', stream_content)
+                self.send_response(self.iopub_socket, 'stream', {'name': 'stderr', 'text': err})
 
         return {'status': 'ok',
                 'execution_count': self.execution_count,
                 'payload': [],
-                'user_expressions': {},
+                'user_expressions': {}
                 }
 
 
