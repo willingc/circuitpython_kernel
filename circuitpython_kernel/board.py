@@ -4,9 +4,8 @@
 from serial import Serial
 from serial.tools.list_ports import comports
 
-# Boards USB
-FEATHER_MO_BASIC_VID = 0x239A
-FEATHER_MO_BASIC_PID = 0x8015
+# Atmel SAMD Boards USB
+FEATHER_MO_BASIC = {'VID': 0x239A, 'PID': 0x8015}
 
 BAUDRATE = 115200
 PARITY = 'N'
@@ -15,9 +14,8 @@ PARITY = 'N'
 def find_board():
     """Find port where first board is connected."""
     for port in comports():
-        if port.vid == FEATHER_MO_BASIC_VID and port.pid == FEATHER_MO_BASIC_PID:
+        if port.vid == FEATHER_MO_BASIC['VID'] and port.pid == FEATHER_MO_BASIC_PID:
             return port.device
-
 
 def connect():
     """Connect to a pySerial Serial object.
@@ -42,7 +40,12 @@ def connect():
 
     Ctrl-D on a blank line will do a soft reset.
 
-    Note that ctrl-A and ctrl-D do not work with WebREPL.
+    Note that Ctrl-A and Ctrl-D do not work with WebREPL.
+
+    Returns
+    -------
+    obj
+        Serial object connected to the microcontroller board
 
     """
     s = Serial(find_board())
