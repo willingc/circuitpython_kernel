@@ -2,6 +2,7 @@
 """Basic functionality of CircuitPython kernel."""
 import ast
 import re
+import sys
 import time
 
 from ipykernel.kernelbase import Kernel
@@ -52,16 +53,21 @@ class CircuitPyKernel(Kernel):
 
         """
         # Send code to board
-        self.serial.write(code.encode('utf-8') + b'\x04')
+        self.serial.write(code.encode('utf-8') + b'\x04') # code and Control-D
 
-        # Set up a byte array to hold the result from the code run
+        # Set up a bytearray to hold the result from the code run
         result = bytearray()
-        while not result.endswith(b'\x04>'):
+        while not result.endswith(b'\x04>'):  # Control-D
             time.sleep(0.1)
             result.extend(self.serial.read_all())
 
+        # For DEBUG
+        print('Read', repr(result), file=sys.__stderr__)
+
         assert result.startswith(b'OK')
         out, err = result[2:-2].split(b'\x04', 1) # split result into out and err
+
+        print('Output', repr(out), file=sys.__stderr__)
         return out.decode('utf-8', 'replace'), err.decode('utf-8', 'replace')
 
 
