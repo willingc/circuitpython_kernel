@@ -8,4 +8,4 @@ sphinx==1.5.3
 cryptography==1.8.1
 PyYAML==3.12
 Flask-Sphinx-Themes==1.0.1
-recommonmark
+recommonmark==0.4.0
