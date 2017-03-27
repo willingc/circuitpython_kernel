@@ -13,6 +13,12 @@ Contents:
    authors
    history
 
+.. toctree::
+   :maxdepth: 2
+   :caption: Hardware
+
+   boardprep
+
 Indices and tables
 ==================
 

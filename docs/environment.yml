@@ -8,3 +8,4 @@ dependencies:
 - pip:
     - circuitpython_kernel==0.1.0
     - Flask-Sphinx-Themes
+    - recommonmark
