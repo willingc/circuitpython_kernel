@@ -10,6 +10,7 @@ from .board import connect
 from .version import __version__
 
 
+
 class CircuitPyKernel(Kernel):
     """CircuitPython kernel implementation."""
     protocol_version = '4.5.2'
@@ -61,13 +62,9 @@ class CircuitPyKernel(Kernel):
             time.sleep(0.1)
             result.extend(self.serial.read_all())
 
-        # For DEBUG
-        print('Read', repr(result), file=sys.__stderr__)
-
         assert result.startswith(b'OK')
         out, err = result[2:-2].split(b'\x04', 1) # split result into out and err
 
-        print('Output', repr(out), file=sys.__stderr__)
         return out.decode('utf-8', 'replace'), err.decode('utf-8', 'replace')
 
 
@@ -104,8 +101,8 @@ class CircuitPyKernel(Kernel):
             err_content = {'name': 'stderr', 'text': err}
             if out:
                 self.send_response(self.iopub_socket, 'stream', out_content)
-   #         if err:
-   #             self.send_response(self.iopub_socket, 'stream', err_content)
+            if err:
+                self.send_response(self.iopub_socket, 'stream', err_content)
 
         return {'status': 'ok',
                 'execution_count': self.execution_count,

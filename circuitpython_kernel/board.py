@@ -4,6 +4,7 @@
 from serial import Serial
 from serial.tools.list_ports import comports
 
+
 # Atmel SAMD Boards USB
 FEATHER_MO_BASIC = {'VID': 0x239A, 'PID': 0x8015}
 
