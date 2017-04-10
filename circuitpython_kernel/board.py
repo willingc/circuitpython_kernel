@@ -7,6 +7,7 @@ from serial.tools.list_ports import comports
 
 # Atmel SAMD Boards USB
 FEATHER_MO_BASIC = {'VID': 0x239A, 'PID': 0x8015}
+FEATHER_MO_EXPRESS = {'VID': 0x239A, 'PID': 0x801b}
 
 BAUDRATE = 115200
 PARITY = 'N'
@@ -15,7 +16,8 @@ PARITY = 'N'
 def find_board():
     """Find port where first board is connected."""
     for port in comports():
-        if port.vid == FEATHER_MO_BASIC['VID'] and port.pid == FEATHER_MO_BASIC['PID']:
+        if ((port.vid == FEATHER_MO_BASIC['VID'] and port.pid == FEATHER_MO_BASIC['PID') or
+            (port.vid == FEATHER_MO_EXPRESS['VID'] and port.pid == FEATHER_MO_EXPRESS['PID')):
             return port.device
 
 def connect():
