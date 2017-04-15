@@ -1,6 +1,16 @@
 # Board Preparation
 
-## Adafruit Feather MO SAMD21
+
+## Adafruit Feather M0 Express
+
+### Add CircuitPython firmware
+
+- Download CircuitPython firmware.
+- Plug in board and double click the **reset** button.
+- Drag and drop the \*.uf2 CircuitPython file to the USB drive
+- You should see the `CIRCUITPY` as the new name of the USB drive
+
+## Adafruit Feather M0 SAMD21
 
 ### Add CircuitPython firmware
 
