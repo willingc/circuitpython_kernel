@@ -4,7 +4,10 @@
 language: python
 python: 3.5
 
-install: pip install -r requirements_dev.txt
+install:
+   pip install -r requirements_dev.txt
+   python setup.py install
 
-script: python setup.py test
+script:
+   python setup.py test
 
