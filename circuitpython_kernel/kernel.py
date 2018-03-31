@@ -10,32 +10,31 @@ from .board import connect
 from .version import __version__
 
 
-
 class CircuitPyKernel(Kernel):
     """CircuitPython kernel implementation."""
     protocol_version = '4.5.2'
     implementation = 'circuitpython_kernel'
     implementation_version = __version__
-    language_info = {'name': 'python',
-                     'version': '3',
-                     'mimetype': 'text/x-python',
-                     'file_extension': '.py',
-                     'pygments_lexer': 'python3',
-                     'codemirror_mode': {'name': 'python', 'version': 3},
-                    }
+    language_info = {
+        'name': 'python',
+        'version': '3',
+        'mimetype': 'text/x-python',
+        'file_extension': '.py',
+        'pygments_lexer': 'python3',
+        'codemirror_mode': {'name': 'python', 'version': 3},
+    }
     banner = "Jupyter and CircuitPython create fablab-ulous things."
     help_links = [
-        {'text': 'CircuitPython kernel',
-         'url': 'https://circuitpython_kernel.readthedocs.io',
-        },
+        {
+            'text': 'CircuitPython kernel',
+            'url': 'https://circuitpython_kernel.readthedocs.io',
+        }
     ]
-
 
     def __init__(self, **kwargs):
         """Set up connection to board"""
         super().__init__(**kwargs)
         self.serial = connect()
-
 
     def run_code(self, code):
         """Run a code snippet.
@@ -54,7 +53,7 @@ class CircuitPyKernel(Kernel):
 
         """
         # Send code to board
-        self.serial.write(code.encode('utf-8') + b'\x04') # code and Control-D
+        self.serial.write(code.encode('utf-8') + b'\x04')  # code and Control-D
 
         # Set up a bytearray to hold the result from the code run
         result = bytearray()
@@ -63,13 +62,13 @@ class CircuitPyKernel(Kernel):
             result.extend(self.serial.read_all())
 
         assert result.startswith(b'OK')
-        out, err = result[2:-2].split(b'\x04', 1) # split result into out and err
+        out, err = result[2:-2].split(b'\x04', 1)  # split result into out and err
 
         return out.decode('utf-8', 'replace'), err.decode('utf-8', 'replace')
 
-
-    def do_execute(self, code, silent, store_history=True,
-                   user_expressions=None, allow_stdin=False):
+    def do_execute(
+        self, code, silent, store_history=True, user_expressions=None, allow_stdin=False
+    ):
         """Execute a user's code cell.
 
         Parameters
@@ -104,12 +103,12 @@ class CircuitPyKernel(Kernel):
             if err:
                 self.send_response(self.iopub_socket, 'stream', err_content)
 
-        return {'status': 'ok',
-                'execution_count': self.execution_count,
-                'payload': [],
-                'user_expressions': {}
-                }
-
+        return {
+            'status': 'ok',
+            'execution_count': self.execution_count,
+            'payload': [],
+            'user_expressions': {},
+        }
 
     def _eval(self, expr):
         """Evaluate the expression.
@@ -119,7 +118,6 @@ class CircuitPyKernel(Kernel):
         """
         out, err = self.run_code('print({})'.format(expr))
         return ast.literal_eval(out)
-
 
     def do_complete(self, code, cursor_pos):
         """Support code completion."""
@@ -133,10 +131,19 @@ class CircuitPyKernel(Kernel):
             else:
                 names = self._eval('dir()')
             matches = [n for n in names if n.startswith(prefix)]
-            return {'matches': matches,
-                    'cursor_start': cursor_pos - len(prefix), 'cursor_end': cursor_pos,
-                    'metadata': {}, 'status': 'ok'}
+            return {
+                'matches': matches,
+                'cursor_start': cursor_pos - len(prefix),
+                'cursor_end': cursor_pos,
+                'metadata': {},
+                'status': 'ok',
+            }
+
         else:
-            return {'matches': [],
-                    'cursor_start': cursor_pos, 'cursor_end': cursor_pos,
-                    'metadata': {}, 'status': 'ok'}
+            return {
+                'matches': [],
+                'cursor_start': cursor_pos,
+                'cursor_end': cursor_pos,
+                'metadata': {},
+                'status': 'ok',
+            }

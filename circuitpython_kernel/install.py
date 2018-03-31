@@ -25,14 +25,16 @@ def install_my_kernel_spec(user=True, prefix=None):
         with open(os.path.join(td, 'kernel.json'), 'w') as f:
             json.dump(kernel_json, f, sort_keys=True)
         print('Installing CircuitPython kernelspec')
-        KernelSpecManager().install_kernel_spec(td, 'circuitpython',
-            user=user, replace=True, prefix=prefix)
+        KernelSpecManager().install_kernel_spec(
+            td, 'circuitpython', user=user, replace=True, prefix=prefix
+        )
         print('Completed kernel installation.')
 
 
 def _is_root():
     try:
         return os.geteuid() == 0
+
     except AttributeError:
         return False  # assume not an admin on non-Unix platforms
 
@@ -52,6 +54,7 @@ def main(argv=None):
             user = False
 
     install_my_kernel_spec(user=user, prefix=prefix)
+
 
 if __name__ == '__main__':
     main(argv=sys.argv)

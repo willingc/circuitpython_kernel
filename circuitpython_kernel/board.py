@@ -17,10 +17,19 @@ PARITY = 'N'
 def find_board():
     """Find port where first board is connected."""
     for port in comports():
-        if ((port.vid == FEATHER_MO_BASIC['VID'] and port.pid == FEATHER_MO_BASIC['PID']) or
-            (port.vid == FEATHER_MO_EXPRESS['VID'] and port.pid == FEATHER_MO_EXPRESS['PID']) or
-            (port.vid == TRINKET_MO['VID'] and port.pid == TRINKET_MO['PID'])):
+        if (
+            (
+                port.vid == FEATHER_MO_BASIC['VID']
+                and port.pid == FEATHER_MO_BASIC['PID']
+            )
+            or (
+                port.vid == FEATHER_MO_EXPRESS['VID']
+                and port.pid == FEATHER_MO_EXPRESS['PID']
+            )
+            or (port.vid == TRINKET_MO['VID'] and port.pid == TRINKET_MO['PID'])
+        ):
             return port.device
+
 
 def connect():
     """Connect to a pySerial Serial object.
