@@ -9,6 +9,7 @@ from serial.tools.list_ports import comports
 FEATHER_MO_BASIC = {'VID': 0x239A, 'PID': 0x8015}
 FEATHER_MO_EXPRESS = {'VID': 0x239A, 'PID': 0x801b}
 TRINKET_MO = {'VID': 0x239A, 'PID': 0x801F}
+METRO_M4 = {'VID': 0x239A, 'PID': 0x8026}
 
 BAUDRATE = 115200
 PARITY = 'N'
@@ -26,7 +27,14 @@ def find_board():
                 port.vid == FEATHER_MO_EXPRESS['VID']
                 and port.pid == FEATHER_MO_EXPRESS['PID']
             )
-            or (port.vid == TRINKET_MO['VID'] and port.pid == TRINKET_MO['PID'])
+            or (
+                port.vid == TRINKET_MO['VID']
+                and port.pid == TRINKET_MO['PID']
+            )
+            or (
+                port.vid == METRO_M4['VID']
+                and port.pid == METRO_M4['PID']
+            )
         ):
             return port.device
 
