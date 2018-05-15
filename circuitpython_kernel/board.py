@@ -9,7 +9,7 @@ from serial.tools.list_ports import comports
 FEATHER_MO_BASIC = {'VID': 0x239A, 'PID': 0x8015}
 FEATHER_MO_EXPRESS = {'VID': 0x239A, 'PID': 0x801b}
 TRINKET_MO = {'VID': 0x239A, 'PID': 0x801F}
-METRO_M4 = {'VID': 0x239A, 'PID': 0x8026}
+METRO_M4 = {'VID': 0x239A, 'PID': 0x8021}
 
 BAUDRATE = 115200
 PARITY = 'N'
@@ -70,7 +70,10 @@ def connect():
         Serial object connected to the microcontroller board
 
     """
-    s = Serial(find_board(), 115200, parity=PARITY)
+    try:
+        s = Serial(find_board(), 115200, parity=PARITY)
+    except:
+        print("Board not found")
     if not s.is_open:
         s.open()
     s.write(b'\x03\x01')  # Ctrl-C: interrupt, Ctrl-A: switch to raw REPL
