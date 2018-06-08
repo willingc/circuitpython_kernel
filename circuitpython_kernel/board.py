@@ -7,17 +7,33 @@ from serial.tools.list_ports import comports
 
 # Atmel SAMD Boards USB
 FEATHER_MO_BASIC = {'VID': 0x239A, 'PID': 0x8015}
-FEATHER_MO_EXPRESS = {'VID': 0x239A, 'PID': 0x801b}
+FEATHER_MO_EXPRESS = {'VID': 0x239A, 'PID': 0x8023}
+FEATHER_MO_WIFI = {'VID': 0x239A, 'PID': 0x801b}
 TRINKET_MO = {'VID': 0x239A, 'PID': 0x801F}
+METRO_M0 = {'VID': 0x239A, 'PID': 0x8014}
 METRO_M4 = {'VID': 0x239A, 'PID': 0x8021}
+CPX_M0 = {'VID': 0x239A, 'PID': 0x8018}
+
+# ESP Boards USB (SLAB_USBtoUART)
+HUZZAH_8266 = {'VID': 0x10C4, 'PID': 0xEA60}
 
 BAUDRATE = 115200
 PARITY = 'N'
 
 
 def find_board():
-    """Find port where first board is connected."""
+    """Find connected board port
+
+    Returns
+    -------
+    port.device
+        Serial object connected to the microcontroller board
+    is_samd
+        bool: samd or non-samd (ESP-based) board type
+    """
+    is_samd = True
     for port in comports():
+        # check if SAMD-based
         if (
             (
                 port.vid == FEATHER_MO_BASIC['VID']
@@ -35,8 +51,27 @@ def find_board():
                 port.vid == METRO_M4['VID']
                 and port.pid == METRO_M4['PID']
             )
+            or (
+                port.vid == CPX_M0['VID']
+                and port.pid == CPX_M0['PID']
+            )
+            or (
+                port.vid == FEATHER_MO_WIFI['VID']
+                and port.pid == FEATHER_MO_WIFI['PID']
+            )
         ):
-            return port.device
+            #return port.device
+            is_samd = True
+        # check if ESP-based
+        elif (
+                (
+                    port.vid == HUZZAH_8266['VID']
+                    and port.pid == HUZZAH_8266['PID']
+                )
+        ):
+            is_samd = False
+        return is_samd
+        return port.device
 
 
 def connect():
@@ -79,4 +114,5 @@ def connect():
     s.write(b'\x03\x01')  # Ctrl-C: interrupt, Ctrl-A: switch to raw REPL
     s.read_until(b'raw REPL')
     s.read_until(b'\r\n>')  # Wait for prompt
+    print (s)
     return s
