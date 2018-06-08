@@ -7,9 +7,14 @@ from serial.tools.list_ports import comports
 
 # Atmel SAMD Boards USB
 FEATHER_MO_BASIC = {'VID': 0x239A, 'PID': 0x8015}
-FEATHER_MO_EXPRESS = {'VID': 0x239A, 'PID': 0x801b}
+FEATHER_MO_EXPRESS = {'VID': 0x239A, 'PID': 0x8023}
+FEATHER_MO_WIFI = {'VID': 0x239A, 'PID': 0x801b}
 TRINKET_MO = {'VID': 0x239A, 'PID': 0x801F}
+METRO_M0 = {'VID': 0x239A, 'PID': 0x8014}
 METRO_M4 = {'VID': 0x239A, 'PID': 0x8021}
+CPX_M0 = {'VID': 0x239A, 'PID': 0x8019}
+
+#TODO: Add in ESP Boards
 
 BAUDRATE = 115200
 PARITY = 'N'
@@ -18,24 +23,15 @@ PARITY = 'N'
 def find_board():
     """Find port where first board is connected."""
     for port in comports():
-        if (
-            (
-                port.vid == FEATHER_MO_BASIC['VID']
-                and port.pid == FEATHER_MO_BASIC['PID']
-            )
-            or (
-                port.vid == FEATHER_MO_EXPRESS['VID']
-                and port.pid == FEATHER_MO_EXPRESS['PID']
-            )
-            or (
-                port.vid == TRINKET_MO['VID']
-                and port.pid == TRINKET_MO['PID']
-            )
-            or (
-                port.vid == METRO_M4['VID']
-                and port.pid == METRO_M4['PID']
-            )
-        ):
+        print('vid: ', port.vid)
+        print('pid: ', port.pid)
+        # checking for SAMD21-boards
+        if ((port.vid == FEATHER_MO_BASIC['VID'] and port.pid == FEATHER_MO_BASIC['PID']) or
+            (port.vid == FEATHER_MO_EXPRESS['VID'] and port.pid == FEATHER_MO_EXPRESS['PID']) or
+            (port.vid == TRINKET_MO['VID'] and port.pid == TRINKET_MO['PID']) or
+            (port.vid == CPX_M0['VID'] and port.pid == CPX_M0['PID']) or
+            (port.vid == FEATHER_MO_WIFI['VID'] and port.pid == FEATHER_MO_WIFI['PID']) or
+            (port.vid == METRO_M0['VID'] and port.pid == METRO_M0['PID'])):
             return port.device
 
 
