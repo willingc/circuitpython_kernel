@@ -13,20 +13,23 @@ requirements = [
     'pyserial',
     'ipython',
     'ipykernel',
+    'pylint'
 ]
+
 
 test_requirements = [
     # TODO: put package test requirements here
 ]
 
+
 setup(
     name='circuitpython_kernel',
-    version='0.2.0',
+    version='0.3.0',
     description="CircuitPython Kernel enables CircuitPython to be used in Jupyter Notebooks for learning Python coding with microcontrollers.",
     long_description=readme + '\n\n' + history,
     author="Carol Willing",
     author_email='carolcode@willingconsulting.com',
-    url='https://github.com/willingc/circuitpython_kernel',
+    url='https://github.com/adafruit/circuitpython_kernel',
     packages=[
         'circuitpython_kernel',
     ],
@@ -37,13 +40,13 @@ setup(
     install_requires=requirements,
     license="BSD license",
     zip_safe=False,
-    keywords='circuitpython_kernel jupyter notebook',
+    keywords='circuitpython_kernel kernel jupyter notebook',
     classifiers=[
         'Development Status :: 2 - Pre-Alpha',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: BSD License',
         'Natural Language :: English',
-        'Programming Language :: Python :: 3',
+        'Programming Language :: Python :: 3.3',
         'Programming Language :: Python :: 3.4',
         'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',

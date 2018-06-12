@@ -5,26 +5,27 @@ from serial import Serial
 from serial.tools.list_ports import comports
 
 # Vendor ID for SAMD Adafruit
-Adafruit_VID = 0x239A
+ADAFRUIT_VID = 0x239A
+
 
 # Vendor ID for Feather Huzzah ESP8266
 ESP8266_VID = 0x10C4
 
 BAUDRATE = 115200
-PARITY = 'N'
-
+IS_ESP = False
 
 def find_adafruit_board():
     """Find serial port where Adafruit board is connected"""
-    global is_esp # detect ESP REPLs
+    # pylint: disable-msg=W0603
+    global IS_ESP
+    port = None
     for port in comports():
         print('vid: ', port.vid)
-        if port.vid == Adafruit_VID:
-            is_esp = False
-            return port.device
+        if port.vid == ADAFRUIT_VID:
+            IS_ESP = False
         elif port.vid == ESP8266_VID:
-            is_esp = True
-            return port.device
+            IS_ESP = True
+    return port.device
 
 def connect():
     """Connect to a pySerial Serial object.
@@ -57,21 +58,16 @@ def connect():
         Serial object connected to the microcontroller board
 
     """
-    try:
-        s = Serial(find_adafruit_board(), 115200, parity=PARITY)
-        time.sleep(0.5)
-    except:
-        print("Board not found")
-    print(is_esp)
-    if not s.is_open:
-        s.open()
-    if is_esp == False:
-        s.write(b'\x03\x03\x01')  # Double Ctrl-C: interrupt, Ctrl-A: switch to raw REPL
-        s.read_until(b'raw REPL')
-        s.read_until(b'\r\n>')  # Wait for prompt
-        return s
-    elif is_esp == True:
-        s.write(b'\r\x03\x03')
-        s.write(b'\r\x01') # ctrl-A: enter raw REPL
-        s.read_until(b'raw REPL; CTRL-B to exit\r\n>')
-        return s
+    cpy_board = Serial(find_adafruit_board(), 115200, parity='N')
+    time.sleep(0.5)
+    if not cpy_board.is_open:
+        cpy_board.open()
+    if not IS_ESP:
+        cpy_board.write(b'\x03\x03\x01')  # ctrl+c (2x), ctrl+a
+        cpy_board.read_until(b'raw REPL')
+        cpy_board.read_until(b'\r\n>')  # Wait for prompt
+    else:
+        cpy_board.write(b'\r\x03\x03')
+        cpy_board.write(b'\r\x01') # ctrl-A: enter raw REPL
+        cpy_board.read_until(b'raw REPL; CTRL-B to exit\r\n>')
+    return cpy_board
