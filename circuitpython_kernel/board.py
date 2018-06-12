@@ -1,39 +1,30 @@
 # -*- coding: utf-8 -*-
 """Serial Connection to a Board"""
-
+import time
 from serial import Serial
 from serial.tools.list_ports import comports
 
+# Vendor ID for SAMD Adafruit
+Adafruit_VID = 0x239A
 
-# Atmel SAMD Boards USB
-FEATHER_MO_BASIC = {'VID': 0x239A, 'PID': 0x8015}
-FEATHER_MO_EXPRESS = {'VID': 0x239A, 'PID': 0x8023}
-FEATHER_MO_WIFI = {'VID': 0x239A, 'PID': 0x801b}
-TRINKET_MO = {'VID': 0x239A, 'PID': 0x801F}
-METRO_M0 = {'VID': 0x239A, 'PID': 0x8014}
-METRO_M4 = {'VID': 0x239A, 'PID': 0x8021}
-CPX_M0 = {'VID': 0x239A, 'PID': 0x8019}
-
-#TODO: Add in ESP Boards
+# Vendor ID for Feather Huzzah ESP8266
+ESP8266_VID = 0x10C4
 
 BAUDRATE = 115200
 PARITY = 'N'
 
 
-def find_board():
-    """Find port where first board is connected."""
+def find_adafruit_board():
+    """Find serial port where Adafruit board is connected"""
+    global is_esp # detect ESP REPLs
     for port in comports():
         print('vid: ', port.vid)
-        print('pid: ', port.pid)
-        # checking for SAMD21-boards
-        if ((port.vid == FEATHER_MO_BASIC['VID'] and port.pid == FEATHER_MO_BASIC['PID']) or
-            (port.vid == FEATHER_MO_EXPRESS['VID'] and port.pid == FEATHER_MO_EXPRESS['PID']) or
-            (port.vid == TRINKET_MO['VID'] and port.pid == TRINKET_MO['PID']) or
-            (port.vid == CPX_M0['VID'] and port.pid == CPX_M0['PID']) or
-            (port.vid == FEATHER_MO_WIFI['VID'] and port.pid == FEATHER_MO_WIFI['PID']) or
-            (port.vid == METRO_M0['VID'] and port.pid == METRO_M0['PID'])):
+        if port.vid == Adafruit_VID:
+            is_esp = False
             return port.device
-
+        elif port.vid == ESP8266_VID:
+            is_esp = True
+            return port.device
 
 def connect():
     """Connect to a pySerial Serial object.
@@ -67,12 +58,20 @@ def connect():
 
     """
     try:
-        s = Serial(find_board(), 115200, parity=PARITY)
+        s = Serial(find_adafruit_board(), 115200, parity=PARITY)
+        time.sleep(0.5)
     except:
         print("Board not found")
+    print(is_esp)
     if not s.is_open:
         s.open()
-    s.write(b'\x03\x01')  # Ctrl-C: interrupt, Ctrl-A: switch to raw REPL
-    s.read_until(b'raw REPL')
-    s.read_until(b'\r\n>')  # Wait for prompt
-    return s
+    if is_esp == False:
+        s.write(b'\x03\x03\x01')  # Double Ctrl-C: interrupt, Ctrl-A: switch to raw REPL
+        s.read_until(b'raw REPL')
+        s.read_until(b'\r\n>')  # Wait for prompt
+        return s
+    elif is_esp == True:
+        s.write(b'\r\x03\x03')
+        s.write(b'\r\x01') # ctrl-A: enter raw REPL
+        s.read_until(b'raw REPL; CTRL-B to exit\r\n>')
+        return s
