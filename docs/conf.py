@@ -77,7 +77,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'CircuitPython Kernel'
-copyright = u"2017, Carol Willing"
+copyright = u"2018, Adafruit Industries"
 
 # The version info for the project you're documenting, acts as replacement
 # for |version| and |release|, also used in various other places throughout
@@ -138,7 +138,7 @@ html_theme = 'flask'
 # theme further.  For a list of options available for each theme, see the
 # documentation.
 html_theme_options = {
-    'github_fork': 'willingc/circuitpython_kernel',
+    'github_fork': 'adafruit/circuitpython_kernel',
 }
 
 # Add any paths that contain custom themes here, relative to this directory.
@@ -233,7 +233,7 @@ latex_elements = {
 latex_documents = [
     ('index', 'circuitpython_kernel.tex',
      u'CircuitPython Kernel Documentation',
-     u'Carol Willing', 'manual'),
+     u'Adafruit Industries', 'manual'),
 ]
 
 # The name of an image file (relative to this directory) to place at
@@ -264,7 +264,7 @@ latex_documents = [
 man_pages = [
     ('index', 'circuitpython_kernel',
      u'CircuitPython Kernel Documentation',
-     [u'Carol Willing'], 1)
+     [u'Adafruit Industries'], 1)
 ]
 
 # If true, show URL addresses after external links.
@@ -279,7 +279,7 @@ man_pages = [
 texinfo_documents = [
     ('index', 'circuitpython_kernel',
      u'CircuitPython Kernel Documentation',
-     u'Carol Willing',
+     u'Adafruit Industries',
      'circuitpython_kernel',
      'One line description of project.',
      'Miscellaneous'),

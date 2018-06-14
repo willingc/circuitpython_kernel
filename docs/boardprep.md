@@ -1,18 +1,25 @@
 
 # Board Preparation
 
+Before you start using the CircuitPython_Kernel, you'll need a board running CircuitPython. If you're not sure if
+the board plugged into your computer is running CircuitPython, check your file explorer for a drive named `CIRCUITPY`
 
-## Adafruit Express Boards, SAMD
+## Designed for CircuitPython (SAMD21 and SAMD51)
 
 ### Boards Supported:
 
  - [Circuit Playground Express](https://www.adafruit.com/product/3333)
- - [Feather M0 Express](https://www.adafruit.com/product/3403)
+ - [Feather M0](https://www.adafruit.com/product/3403)
  - [Trinket M0](https://www.adafruit.com/product/3500)
  - [Metro M0 Express](https://www.adafruit.com/product/3505)
  - [Gemma M0](https://www.adafruit.com/product/3501)
+ - [ItsyBitsy M0](https://www.adafruit.com/product/3727)
 
-### Add CircuitPython firmware
+ - [Metro M4 ]( https://www.adafruit.com/product/3382)
+ - [ItsyBitsy M4](https://www.adafruit.com/product/3727)
+
+
+### Installing CircuitPython Firmware
 
 - Download the [CircuitPython Firmware (.uf2 file) from the CircuitPython Repo](https://github.com/adafruit/circuitpython/releases)
 - Plug in board and double click the **reset** button to enter bootloader mode.
@@ -22,7 +29,10 @@
 
 ## Adafruit Feather Huzzah ESP8266
 
-### Add CircuitPython firmware
+While they do work with CircuitPython_Kernel, ESP8266-based boards require a different type of installation and configuration
+from the boards designed for circuitpython.
+
+### Installing CircuitPython Firmware
 
 - python3 -m pip install esptool
 - - Download the [CircuitPython Firmware (.bin file) from the CircuitPython Repo](https://github.com/adafruit/circuitpython/releases)
