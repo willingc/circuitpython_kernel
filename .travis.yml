@@ -11,4 +11,4 @@ install:
 
 script:
    - python setup.py test
-   - pylint circuitpython_kernel/board.py
+   - pylint circuitpython_kernel/board.py circuitpython_kernel/kernel.py

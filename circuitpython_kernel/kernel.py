@@ -2,12 +2,15 @@
 """Basic functionality of CircuitPython kernel."""
 import ast
 import re
-import sys
 import time
+import logging
 
 from ipykernel.kernelbase import Kernel
 from .board import connect
 from .version import __version__
+
+# Create global KERNEL_LOGGER for debug messages.
+KERNEL_LOGGER = logging.getLogger(__name__)
 
 
 class CircuitPyKernel(Kernel):
@@ -23,17 +26,18 @@ class CircuitPyKernel(Kernel):
         'pygments_lexer': 'python3',
         'codemirror_mode': {'name': 'python', 'version': 3},
     }
-    banner = "Jupyter and CircuitPython create fablab-ulous things."
+    banner = "CircuitPython"
     help_links = [
         {
             'text': 'CircuitPython kernel',
-            'url': 'https://circuitpython_kernel.readthedocs.io',
+            'url': 'https://github.com/adafruit/circuitpython_kernel',
         }
     ]
 
     def __init__(self, **kwargs):
         """Set up connection to board"""
         super().__init__(**kwargs)
+        KERNEL_LOGGER.debug('Opening CircuitPython board connection..')
         self.serial = connect()
 
     def run_code(self, code):
@@ -62,13 +66,13 @@ class CircuitPyKernel(Kernel):
             result.extend(self.serial.read_all())
 
         assert result.startswith(b'OK')
-        out, err = result[2:-2].split(b'\x04', 1)  # split result into out and err
+        out, err = result[2:-2].split(b'\x04', 1) # split result
 
         return out.decode('utf-8', 'replace'), err.decode('utf-8', 'replace')
 
-    def do_execute(
-        self, code, silent, store_history=True, user_expressions=None, allow_stdin=False
-    ):
+
+    def do_execute(self, code, silent, store_history=True,
+                   user_expressions=None, allow_stdin=False):
         """Execute a user's code cell.
 
         Parameters
@@ -94,7 +98,8 @@ class CircuitPyKernel(Kernel):
 
         """
         out, err = self.run_code(code)
-
+        KERNEL_LOGGER.debug('Output: %s', out)
+        KERNEL_LOGGER.debug("Error %s", err)
         if not silent:
             out_content = {'name': 'stdout', 'text': out}
             err_content = {'name': 'stderr', 'text': err}
@@ -117,14 +122,25 @@ class CircuitPyKernel(Kernel):
 
         """
         out, err = self.run_code('print({})'.format(expr))
+        KERNEL_LOGGER.debug('Output: %s', out)
+        KERNEL_LOGGER.debug('Error %s', err)
         return ast.literal_eval(out)
+
+
+    def do_shutdown(self, restart):
+        """Handle the kernel shutting down."""
+        KERNEL_LOGGER.debug('Shutting down CircuitPython Board Connection..')
+        self.serial.write(b'\r\x02')
+        KERNEL_LOGGER.debug('closing serial connection..')
+        self.serial.close()
+
 
     def do_complete(self, code, cursor_pos):
         """Support code completion."""
         code = code[:cursor_pos]
-        m = re.search(r'(\w+\.)*(\w+)?$', code)
-        if m:
-            prefix = m.group()
+        match = re.search(r'(\w+\.)*(\w+)?$', code)
+        if match:
+            prefix = match.group()
             if '.' in prefix:
                 obj, prefix = prefix.rsplit('.')
                 names = self._eval('dir({})'.format(obj))

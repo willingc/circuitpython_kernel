@@ -20,13 +20,13 @@ kernel_json = {
 
 def install_my_kernel_spec(user=True, prefix=None):
     """Install circuitpython kernel to list of kernels."""
-    with TemporaryDirectory() as td:
-        os.chmod(td, 0o755)  # Starts off as 700, not user readable
-        with open(os.path.join(td, 'kernel.json'), 'w') as f:
+    with TemporaryDirectory() as temp_dir:
+        os.chmod(temp_dir, 0o755)  # Starts off as 700, not user readable
+        with open(os.path.join(temp_dir, 'kernel.json'), 'w') as f:
             json.dump(kernel_json, f, sort_keys=True)
         print('Installing CircuitPython kernelspec')
         KernelSpecManager().install_kernel_spec(
-            td, 'circuitpython', user=user, replace=True, prefix=prefix
+            temp_dir, 'circuitpython', user=user, replace=True, prefix=prefix
         )
         print('Completed kernel installation.')
 
