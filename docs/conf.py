@@ -17,7 +17,7 @@ import sys
 import os
 
 # For conversion from markdown to html
-import recommonmark.parser
+import recommonmark
 
 # If extensions (or modules to document with autodoc) are in another
 # directory, add these directories to sys.path here. If the directory is

@@ -34,8 +34,8 @@ from the boards designed for circuitpython.
 
 ### Installing CircuitPython Firmware
 
-- python3 -m pip install esptool
-- - Download the [CircuitPython Firmware (.bin file) from the CircuitPython Repo](https://github.com/adafruit/circuitpython/releases)
+- `python3 -m pip install esptool`
+- Download the [CircuitPython Firmware (.bin file) from the CircuitPython Repo](https://github.com/adafruit/circuitpython/releases)
 - Install the [SiLabs CP210x driver](https://www.silabs.com/products/development-tools/software/usb-to-uart-bridge-vcp-drivers)
 - Erase flash `python3 esptool.py --port /path/to/ESP8266 erase_flash`
 - Load firmware: `esptool.py --port /path/to/ESP8266 --baud 460800 write_flash --flash_size=detect 0 firmware.bin`
