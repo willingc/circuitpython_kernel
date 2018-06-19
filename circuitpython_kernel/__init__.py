@@ -3,5 +3,5 @@
 
 from .version import version_info, __version__
 
-__author__ = """Carol Willing"""
-__email__ = 'carolcode@willingconsulting.com'
+__author__ = """Adafruit Industries"""
+__email__ = 'brent@adafruit.com'
