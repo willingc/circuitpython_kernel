@@ -6,7 +6,7 @@ flake8==3.5.0
 coverage==4.5.1
 sphinx==1.7.5
 cryptography==2.2.2
-PyYAML==4.2b2
+PyYAML==4.2b4
 Flask-Sphinx-Themes==1.0.2
 recommonmark==0.4.0
 pylint==1.9.2
