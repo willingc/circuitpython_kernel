@@ -1,10 +1,10 @@
 bumpversion==0.6.0
 pip==20.2.2
 wheel==0.32.1
+sphinx==3.2.1
 coverage==5.2.1
 watchdog==0.10.3
 flake8==3.8.3
-sphinx==1.8.1
 cryptography==2.6.1
 PyYAML==5.3.1
 Flask-Sphinx-Themes==1.0.2
