@@ -8,5 +8,5 @@ flake8==3.8.3
 cryptography==2.6.1
 PyYAML==5.3.1
 Flask-Sphinx-Themes==1.0.2
+pylint==2.6.0
 recommonmark==0.6.0
-pylint==2.1.1
